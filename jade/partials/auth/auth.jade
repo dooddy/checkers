@@ -1,0 +1,4 @@
+md-button(ng-if="!user" ng-click="loginWithGoogle()") Login with Google
+div(ng-if="user")
+    md-button(ng-bind="user.google.displayName")
+    md-button(ng-click="logout()") Logout

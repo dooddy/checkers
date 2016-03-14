@@ -1,0 +1,8 @@
+doctype html
+html(ng-app="checkers")
+    head
+        title Checkers
+        link(rel="stylesheet" href="/css/main.css")
+    body(layout="row")
+        md-content(ui-view layout="column" flex)
+        script(src="/js/app.js")
