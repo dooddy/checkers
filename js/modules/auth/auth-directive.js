@@ -3,23 +3,15 @@
 module.exports = ['authService', function(authService) {
   return {
     restrict: 'E',
-    templateUrl: './partials/auth/auth.html',
-    controller: ['$scope', '$timeout', function($scope, $timeout) {
-      getUser();
-
+    templateUrl: './templates/modules/auth/auth.html',
+    controller: ['$rootScope', '$scope', function($rootScope, $scope) {
       $scope.loginWithGoogle = function() {
-        authService.loginWithGoogle(getUser);
+        authService.loginWithGoogle();
       };
 
       $scope.logout = function() {
-        authService.logout(getUser);
+        authService.logout();
       };
-
-      function getUser() {
-        $timeout(function() {
-          $scope.user = authService.getUser();
-        })
-      }
     }]
   }
 }];

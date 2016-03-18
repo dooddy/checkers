@@ -1,0 +1,12 @@
+md-sidenav.md-sidenav-left.md-whiteframe-4dp(md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left-menu" layout="column")
+    auth(layout="column" layout-align="center")
+    md-divider
+    md-button(ui-sref="app") Home
+    md-button(ui-sref="app.profile") Profile
+md-content(layout="column" flex)
+    md-toolbar.md-whiteframe-3dp
+        div.md-toolbar-tools
+            md-button.md-icon-button(hide-gt-sm ng-click="openLeftMenu()")
+                md-icon menu
+    div(flex ui-view="" layout-padding)
+        h1 Home page

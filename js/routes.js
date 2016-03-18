@@ -5,8 +5,21 @@ module.exports = ['$stateProvider', '$urlRouterProvider',
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
-      .state('home', {
+      .state('app', {
         url: '/',
-        templateUrl: './partials/main.html'
+        templateUrl: './templates/pages/main.html',
+        controller: 'mainCtrl'
+      })
+      .state('app.notification', {
+        url: 'notification',
+        templateUrl: './templates/pages/notification.html'
+      })
+      .state('app.profile', {
+        url: 'profile',
+        templateUrl: './templates/pages/profile.html',
+        controller: 'profileCtrl',
+        data: {
+          authorization: true
+        }
       })
   }];
