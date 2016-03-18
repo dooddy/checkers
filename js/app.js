@@ -9,9 +9,6 @@ require('angularfire');
 // include app modules
 require('./modules');
 
-// include app controllers
-require('./controllers');
-
 // include app services
 require('./services');
 
@@ -23,9 +20,6 @@ var app = require('angular').module('checkers', [
 
   // modules
   'checkers.auth',
-
-  // controllers
-  'checkers.controllers',
 
   // services
   'checkers.services'

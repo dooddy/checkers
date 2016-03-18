@@ -8,7 +8,7 @@ module.exports = ['$stateProvider', '$urlRouterProvider',
       .state('app', {
         url: '/',
         templateUrl: './templates/pages/main.html',
-        controller: 'mainCtrl'
+        controller: require('./controllers/main-controller')
       })
       .state('app.notification', {
         url: 'notification',
@@ -17,7 +17,7 @@ module.exports = ['$stateProvider', '$urlRouterProvider',
       .state('app.profile', {
         url: 'profile',
         templateUrl: './templates/pages/profile.html',
-        controller: 'profileCtrl',
+        controller: require('./controllers/profile-controller'),
         data: {
           authorization: true
         }
