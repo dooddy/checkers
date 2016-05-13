@@ -20,6 +20,7 @@ var app = require('angular').module('checkers', [
 
   // modules
   'checkers.auth',
+  'checkers.game',
 
   // services
   'checkers.services'

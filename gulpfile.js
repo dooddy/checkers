@@ -18,7 +18,7 @@ const buffer = require('vinyl-buffer');
 const jade = require('gulp-jade');
 const htmlmin = require('gulp-htmlmin');
 
-const isDevelopment = !process.env.NODE_ENV;
+const isDevelopment = process.argv.indexOf('--production') == -1;
 
 var paths = {
   sass: './sass/*.sass',
@@ -40,31 +40,40 @@ var templateWatcher = function() {
 
 var sassTask = function() {
   return combiner(
-    gulp.src('./sass/main.sass'),
-    debug({title: 'SASS'}),
-    gulpIf(isDevelopment, sourceMaps.init()),
-    sass({includePaths: ['./node_modules/angular-material/']}),
-    gulpIf(!isDevelopment, cssnano()),
-    gulpIf(isDevelopment, sourceMaps.write()),
-    gulp.dest('./public/css'),
-    browserSync.stream()
+      gulp.src('./sass/main.sass'),
+      debug({title: 'SASS'}),
+      gulpIf(isDevelopment, sourceMaps.init()),
+      sass({includePaths: ['./node_modules/angular-material/']}),
+      gulpIf(!isDevelopment, cssnano()),
+      gulpIf(isDevelopment, sourceMaps.write()),
+      gulp.dest('./public/css'),
+      browserSync.stream()
   ).on('error', notify.onError());
 };
 
 var jsTask = function() {
   var b = browserify({
     entries: './js/app.js',
-    debug: isDevelopment
-  });
+    debug: isDevelopment,
+    noParse: [
+      'angular',
+      'angular-animate',
+      'angular-aria',
+      'angular-material',
+      'angular-ui-router',
+      'angularfire',
+      'firebase'
+    ]
+  }).transform('babelify', {presets: ['es2015']});
 
   return combiner(
-    b.bundle(),
-    source('app.js'),
-    buffer(),
-    debug({title: 'JS'}),
-    gulpIf(!isDevelopment, uglify()),
-    gulp.dest('./public/js/'),
-    browserSync.stream()
+      b.bundle(),
+      source('app.js'),
+      buffer(),
+      debug({title: 'JS'}),
+      gulpIf(!isDevelopment, uglify()),
+      gulp.dest('./public/js/'),
+      browserSync.stream()
   ).on('error', notify.onError());
 };
 
@@ -99,6 +108,7 @@ var watchSyncTask = function() {
 gulp.task('sass', sassTask);
 gulp.task('js', jsTask);
 gulp.task('templates', templateTask);
-gulp.task('watch', watchTask);
-gulp.task('watch:sync', watchSyncTask);
+gulp.task('watch', ['build'], watchTask);
+gulp.task('watch:sync', ['build'], watchSyncTask);
 gulp.task('build', ['sass', 'js', 'templates']);
+gulp.task('default', ['build']);
